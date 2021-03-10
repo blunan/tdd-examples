@@ -21,7 +21,7 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testAdivinarLetra() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$adivinoLetra_A = $juego->probarLetra('a');
+		$adivinoLetra_A = $juego->tryLetter('a');
 
 		$this->assertSame("_ a _ _ _ _ _ a\nIntentos restantes: 5\n\n", $juego->show());
 	}
@@ -29,8 +29,8 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testAdivinarDosLetras() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('A');
-		$juego->probarLetra('c');
+		$juego->tryLetter('A');
+		$juego->tryLetter('c');
 
 		$this->assertSame("C a _ _ _ _ _ a\nIntentos restantes: 5\n\n", $juego->show());
 	}
@@ -38,7 +38,7 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testFallarLetra() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('p');
+		$juego->tryLetter('p');
 
 		$this->assertSame("_ _ _ _ _ _ _ _\nIntentos restantes: 4\n\n", $juego->show());
 	}
@@ -46,8 +46,8 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testFallarDosLetras() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('p');
-		$juego->probarLetra('Z');
+		$juego->tryLetter('p');
+		$juego->tryLetter('Z');
 
 		$this->assertSame("_ _ _ _ _ _ _ _\nIntentos restantes: 3\n\n", $juego->show());
 	}
@@ -55,12 +55,12 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testGanar() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('C');
-		$juego->probarLetra('a');
-		$juego->probarLetra('r');
-		$juego->probarLetra('e');
-		$juego->probarLetra('o');
-		$juego->probarLetra('l');
+		$juego->tryLetter('C');
+		$juego->tryLetter('a');
+		$juego->tryLetter('r');
+		$juego->tryLetter('e');
+		$juego->tryLetter('o');
+		$juego->tryLetter('l');
 
 		$this->assertSame("C a r r e o l a\nIntentos restantes: 5\n\n", $juego->show());
 	}
@@ -68,13 +68,13 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testGanarConUnaFalla() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('Z');
-		$juego->probarLetra('C');
-		$juego->probarLetra('a');
-		$juego->probarLetra('r');
-		$juego->probarLetra('e');
-		$juego->probarLetra('o');
-		$juego->probarLetra('l');
+		$juego->tryLetter('Z');
+		$juego->tryLetter('C');
+		$juego->tryLetter('a');
+		$juego->tryLetter('r');
+		$juego->tryLetter('e');
+		$juego->tryLetter('o');
+		$juego->tryLetter('l');
 
 		$this->assertSame("C a r r e o l a\nIntentos restantes: 4\n\n", $juego->show());
 	}
@@ -82,36 +82,36 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testHaGanado() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('C');
-		$juego->probarLetra('a');
-		$juego->probarLetra('r');
-		$juego->probarLetra('e');
-		$juego->probarLetra('o');
-		$juego->probarLetra('l');
+		$juego->tryLetter('C');
+		$juego->tryLetter('a');
+		$juego->tryLetter('r');
+		$juego->tryLetter('e');
+		$juego->tryLetter('o');
+		$juego->tryLetter('l');
 
-		$this->assertTrue($juego->haGanado());
+		$this->assertTrue($juego->hasWon());
 	}
 
 	public function testHaGanado2() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('C');
-		$juego->probarLetra('a');
-		$juego->probarLetra('r');
-		$juego->probarLetra('e');
-		$juego->probarLetra('o');
+		$juego->tryLetter('C');
+		$juego->tryLetter('a');
+		$juego->tryLetter('r');
+		$juego->tryLetter('e');
+		$juego->tryLetter('o');
 
-		$this->assertFalse($juego->haGanado());
+		$this->assertFalse($juego->hasWon());
 	}
 
 	public function testPerder() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('Z');
-		$juego->probarLetra('P');
-		$juego->probarLetra('M');
-		$juego->probarLetra('B');
-		$juego->probarLetra('X');
+		$juego->tryLetter('Z');
+		$juego->tryLetter('P');
+		$juego->tryLetter('M');
+		$juego->tryLetter('B');
+		$juego->tryLetter('X');
 
 		$this->assertSame("_ _ _ _ _ _ _ _\nIntentos restantes: 0\n\n", $juego->show());
 	}
@@ -119,12 +119,12 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testPerderConUnAcierto() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('C');
-		$juego->probarLetra('Z');
-		$juego->probarLetra('P');
-		$juego->probarLetra('M');
-		$juego->probarLetra('B');
-		$juego->probarLetra('X');
+		$juego->tryLetter('C');
+		$juego->tryLetter('Z');
+		$juego->tryLetter('P');
+		$juego->tryLetter('M');
+		$juego->tryLetter('B');
+		$juego->tryLetter('X');
 
 		$this->assertSame("C _ _ _ _ _ _ _\nIntentos restantes: 0\n\n", $juego->show());
 	}
@@ -132,24 +132,24 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testhaPerdido() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('Z');
-		$juego->probarLetra('P');
-		$juego->probarLetra('M');
-		$juego->probarLetra('B');
-		$juego->probarLetra('X');
+		$juego->tryLetter('Z');
+		$juego->tryLetter('P');
+		$juego->tryLetter('M');
+		$juego->tryLetter('B');
+		$juego->tryLetter('X');
 
-		$this->assertTrue($juego->haPerdido());
+		$this->assertTrue($juego->hasLost());
 	}
 
 	public function testhaPerdido2() {
 		$juego = new Ahorcado("Carreola", 5);
 
-		$juego->probarLetra('Z');
-		$juego->probarLetra('P');
-		$juego->probarLetra('M');
-		$juego->probarLetra('B');
+		$juego->tryLetter('Z');
+		$juego->tryLetter('P');
+		$juego->tryLetter('M');
+		$juego->tryLetter('B');
 
-		$this->assertFalse($juego->haPerdido());
+		$this->assertFalse($juego->hasLost());
 	}
 }
 

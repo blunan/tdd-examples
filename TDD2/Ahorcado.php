@@ -4,16 +4,16 @@ namespace TDD2;
 
 class Ahorcado {
 
-	private $palabra;
-	private $intentos;
-	private $letrasIntentadas = [];
+	private $word;
+	private $triesLeft;
+	private $triedLetters = [];
 
-	public function __construct($palabra, $intentos) {
-		$this->palabra = str_split($palabra);
-		$this->intentos = $intentos;
+	public function __construct($word, $triesLeft) {
+		$this->triesLeft = $triesLeft;
+		$this->word = str_split($word);
 	}
 
-	private function isLettetIgnoreCaseInArray($letter, $array) {
+	private function isLetterIgnoreCaseInArray($letter, $array) {
 		if(in_array(strtolower($letter), $array) || in_array(strtoupper($letter), $array)) {
 			return true;
 		} else {
@@ -22,55 +22,41 @@ class Ahorcado {
 	}
 
 	public function show() {
-		$output = array_map(function($a) {
-			if($this->isLettetIgnoreCaseInArray($a, $this->letrasIntentadas)) {
-				return $a;
+		$output = array_map(function($letter) {
+			if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
+				return $letter;
 			} else {
 				return '_';
 			}
-		}, $this->palabra);
+		}, $this->word);
 		$output = implode(" ", $output);
-		$output .= "\nIntentos restantes: " . $this->intentos . "\n\n";
+		$output .= "\nIntentos restantes: " . $this->triesLeft . "\n\n";
 		return $output;
 	}
 
-	public function probarLetra($letra) {
-		if($this->esLetraYaUsada($letra)) {
-			echo "\nYa has intentado con la letra '" . $letra . "', intenta con otra.\n";
+	public function tryLetter($letter) {
+		if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
+			echo "\nYa has intentado con la letra '" . $letter . "', intenta con otra.\n";
 		} else {
-			$this->letrasIntentadas[] = $letra;
-			if($this->esLetraErronea($letra)) {
-				$this->intentos--;
-				echo "\nLa letra '" . $letra . "' no esta en la palabra, intenta con otra.\n";
+			$this->triedLetters[] = $letter;
+			if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
+				$this->triesLeft--;
+				echo "\nLa letra '" . $letter . "' no esta en la palabra, intenta con otra.\n";
 			}
 		}
 	}
 
-	private function esLetraYaUsada($letra) {
-		if($this->isLettetIgnoreCaseInArray($letra, $this->letrasIntentadas)) {
-			return true;
-		}
-		return false;
-	}
-
-	private function esLetraErronea($letra) {
-		if(!$this->isLettetIgnoreCaseInArray($letra, $this->palabra)) {
-			return true;
-		}
-		return false;
-	}
-
-	public function haGanado() {
-		$letrasPorAdivinar = count($this->palabra);
-		foreach ($this->palabra as $letra) {
-			if($this->isLettetIgnoreCaseInArray($letra, $this->letrasIntentadas)) {
-				$letrasPorAdivinar--;
+	public function hasWon() {
+		$lettersToGuess = count($this->word);
+		foreach ($this->word as $letter) {
+			if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
+				$lettersToGuess--;
 			}
 		}
-		return $letrasPorAdivinar == 0;
+		return $lettersToGuess == 0;
 	}
 
-	public function haPerdido() {
-		return !($this->intentos > 0);
+	public function hasLost() {
+		return !($this->triesLeft > 0);
 	}
 }
