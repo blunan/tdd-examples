@@ -5,11 +5,11 @@ namespace TDD2;
 class Ahorcado {
 
 	private $word;
-	private $triesLeft;
+	private $maxTries;
 	private $triedLetters = [];
 
-	public function __construct($word, $triesLeft) {
-		$this->triesLeft = $triesLeft;
+	public function __construct($word, $maxTries) {
+		$this->maxTries = $maxTries;
 		$this->word = str_split($word);
 	}
 
@@ -21,6 +21,16 @@ class Ahorcado {
 		}
 	}
 
+	private function getTriesLeft() {
+		$triesLeft = $this->maxTries;
+		foreach ($this->triedLetters as $letter) {
+			if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
+				$triesLeft--;
+			}
+		}
+		return $triesLeft;
+	}
+
 	public function show() {
 		$output = array_map(function($letter) {
 			if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
@@ -30,7 +40,7 @@ class Ahorcado {
 			}
 		}, $this->word);
 		$output = implode(" ", $output);
-		$output .= "\nIntentos restantes: " . $this->triesLeft . "\n\n";
+		$output .= "\nIntentos restantes: " . $this->getTriesLeft() . "\n\n";
 		return $output;
 	}
 
@@ -42,12 +52,10 @@ class Ahorcado {
 	public function tryLetter($letter) {
 		if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
 			return 0;
-		} else {
-			$this->triedLetters[] = $letter;
-			if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
-				$this->triesLeft--;
-				return -1;
-			}
+		}
+		$this->triedLetters[] = $letter;
+		if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
+			return -1;
 		}
 		return 1;
 	}
@@ -63,6 +71,6 @@ class Ahorcado {
 	}
 
 	public function hasLost() {
-		return !($this->triesLeft > 0);
+		return !($this->getTriesLeft() > 0);
 	}
 }
