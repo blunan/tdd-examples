@@ -3,9 +3,7 @@
 ## Listado de ejercicios:
 
 1. **TDD1** - Juego del ahorcado
-
-
----
+1. **TDD2** - Juego del ahorcado con inyección de dependencias y escritura de logs
 
 ## Como utilizar los ejercicios
 
