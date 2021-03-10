@@ -21,7 +21,7 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testTryOneCorrectLetter() {
 		$game = new Ahorcado("Carreola", 5);
 
-		$adivinoLetra_A = $game->tryLetter('a');
+		$game->tryLetter('a');
 
 		$this->assertSame("_ a _ _ _ _ _ a\nIntentos restantes: 5\n\n", $game->show());
 	}
@@ -172,26 +172,31 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testTryRightLetter() {
 		$game = new Ahorcado("Carreola", 5);
 
-		$result = $game->tryLetter('c');
-
-		$this->assertEquals(1, $result);
+		$this->assertEquals(1, $game->tryLetter('c'));
 	}
 
 	public function testTrySameLetter() {
 		$game = new Ahorcado("Carreola", 5);
 
 		$game->tryLetter('c');
-		$result = $game->tryLetter('c');
 
-		$this->assertEquals(0, $result);
+		$this->assertEquals(0, $game->tryLetter('c'));
 	}
 
 	public function testTryWrongLetterResult() {
 		$game = new Ahorcado("Carreola", 5);
 
-		$result = $game->tryLetter('Z');
+		$this->assertEquals(-1, $game->tryLetter('Z'));
+	}
 
-		$this->assertEquals(-1, $result);
+	/* ------------------------------------------------------------ */
+
+	public function testCreateGameId() {
+		$game = new Ahorcado("Carreola", 5);
+
+		$result = $game->getGameId();
+
+		$this->assertNotEmpty("_ _ _ _ _ _ _ _\nIntentos restantes: 5\n\n", $game->show());
 	}
 }
 

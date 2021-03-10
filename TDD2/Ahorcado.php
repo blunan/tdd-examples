@@ -73,4 +73,8 @@ class Ahorcado {
 	public function hasLost() {
 		return !($this->getTriesLeft() > 0);
 	}
+
+	public function getGameId() {
+		return "id";
+	}
 }
