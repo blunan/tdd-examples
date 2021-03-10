@@ -3,18 +3,22 @@
 
 	require 'Ahorcado.php';
 
-	$juego = new Ahorcado("Parangaricutirimicuaro", 8);
+	$game = new Ahorcado("Parangaricutirimicuaro", 8);
 
-	while(!$juego->haGanado() && !$juego->haPerdido()) {
-		echo "Adivina la palabra\n\n";
-		echo $juego->show();
+	while(!$game->hasWon() && !$game->hasLost()) {
+		echo "\n\nAdivina la palabra\n\n";
+		echo $game->show();
 		echo "Introduce una letra: ";
-		$letra = trim(fgets(STDIN));
-		$juego->probarLetra($letra);
-		echo "\n\n";
+		$letter = trim(fgets(STDIN));
+		$result = $game->tryLetter($letter);
+		if($result == -1) {
+			echo "\nLa letra '" . $letter . "' no esta en la palabra, intenta con otra.\n";
+		} else if ($result == 0) {
+			echo "\nYa has intentado con la letra '" . $letter . "', intenta con otra.\n";
+		}
 	}
-	echo($juego->show());
-	if($juego->haGanado()) {
+	echo($game->show());
+	if($game->haGanado()) {
 		echo "Felicidades, haz ganado!!!\n\n";
 	} else {
 		echo "Lo siento, haz perdido.\n\n";

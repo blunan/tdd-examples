@@ -34,16 +34,22 @@ class Ahorcado {
 		return $output;
 	}
 
+	/*
+	 * -1 Letra errornea
+	 *  0 Letra ya usada
+	 *  1 LEtra valida
+	*/
 	public function tryLetter($letter) {
 		if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
-			echo "\nYa has intentado con la letra '" . $letter . "', intenta con otra.\n";
+			return 0;
 		} else {
 			$this->triedLetters[] = $letter;
 			if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
 				$this->triesLeft--;
-				echo "\nLa letra '" . $letter . "' no esta en la palabra, intenta con otra.\n";
+				return -1;
 			}
 		}
+		return 1;
 	}
 
 	public function hasWon() {
