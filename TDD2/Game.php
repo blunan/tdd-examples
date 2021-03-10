@@ -17,8 +17,8 @@
 			echo "\nYa has intentado con la letra '" . $letter . "', intenta con otra.\n";
 		}
 	}
-	echo($game->show());
-	if($game->haGanado()) {
+	echo "\n\n" . $game->show();
+	if($game->hasWon()) {
 		echo "Felicidades, haz ganado!!!\n\n";
 	} else {
 		echo "Lo siento, haz perdido.\n\n";
