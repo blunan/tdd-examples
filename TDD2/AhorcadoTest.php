@@ -194,9 +194,14 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 	public function testCreateGameId() {
 		$game = new Ahorcado("Carreola", 5);
 
-		$result = $game->getGameId();
+		$this->assertNotEmpty($game->getGameId());
+	}
 
-		$this->assertNotEmpty("_ _ _ _ _ _ _ _\nIntentos restantes: 5\n\n", $game->show());
+	public function testDistinctGameIdForDistinctGames() {
+		$game1 = new Ahorcado("Carreola", 5);
+		$game2 = new Ahorcado("Carreola", 5);
+
+		$this->assertNotEquals($game1->getGameId(), $game2->getGameId());
 	}
 }
 

@@ -5,10 +5,12 @@ namespace TDD2;
 class Ahorcado {
 
 	private $word;
+	private $gameId;
 	private $maxTries;
 	private $triedLetters = [];
 
 	public function __construct($word, $maxTries) {
+		$this->gameId = uniqid();
 		$this->maxTries = $maxTries;
 		$this->word = str_split($word);
 	}
@@ -75,6 +77,6 @@ class Ahorcado {
 	}
 
 	public function getGameId() {
-		return "id";
+		return $this->gameId;
 	}
 }

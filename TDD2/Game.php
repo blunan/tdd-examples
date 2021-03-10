@@ -6,7 +6,8 @@
 	$game = new Ahorcado("Parangaricutirimicuaro", 8);
 
 	while(!$game->hasWon() && !$game->hasLost()) {
-		echo "\n\nAdivina la palabra\n\n";
+		echo "\n\nYour game ID is: " . $game->getGameId() . "\n\n";
+		echo "Adivina la palabra\n\n";
 		echo $game->show();
 		echo "Introduce una letra: ";
 		$letter = trim(fgets(STDIN));
@@ -17,6 +18,7 @@
 			echo "\nYa has intentado con la letra '" . $letter . "', intenta con otra.\n";
 		}
 	}
+	echo "\n\nYour game ID is: " . $game->getGameId();
 	echo "\n\n" . $game->show();
 	if($game->hasWon()) {
 		echo "Felicidades, haz ganado!!!\n\n";
