@@ -26,4 +26,8 @@ class TxtLogger {
 		fclose($log);
 		return $result;
 	}
+
+	public function writeLine($tag , $message) {
+		$this->write($tag . ": " . $message . "\n");
+	}
 }
