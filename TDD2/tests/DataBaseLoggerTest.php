@@ -51,4 +51,15 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 
 		$this->assertSame("Este es un mensaje de prueba\n", $logger->readLog());
 	}
+
+	public function testWriteLogWithTag() {
+		$mockDataBase = $this->createMock(\PDO::class);
+		$logger = new DataBaseLogger($mockDataBase);
+		
+		$mockDataBase->expects($this->once())
+			->method('exec')
+			->with('INSERT INTO logs (tag, log_message) VALUES ("TAG", "Este es un mensaje de prueba");');
+		
+		$logger->writeLogWithTag("TAG", "Este es un mensaje de prueba");
+	}
 }
