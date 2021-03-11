@@ -14,7 +14,7 @@ class TxtLogger implements Log {
 		fclose(fopen($file, "a"));
 	}
 
-	public function write($message) {
+	private function write($message) {
 		$log = fopen($this->file, "a");
 		fwrite($log, $message);
 		fclose($log);

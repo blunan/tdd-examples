@@ -37,31 +37,33 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 
 	public function testWriteLog() {
 		$logger = new TxtLogger($this->logFile);
-		$message = "Mensaje de prueba";
+		$message = "Este es un log de preba";
 	
-		$logger->write($message);
+		$logger->writeLog($message);
 	
-		$this->assertStringEqualsFile($this->logFile, $message);
+		$this->assertSame($message . "\n", $logger->readLogWithTag());
 	}
 
 	public function testWriteReuseLog() {
-		$message = "Este es un log de prueba";
+		$message = "Este es un log de prueba\n";
 		$this->createDummyLogFile($message);
 		$logger = new TxtLogger($this->logFile);
 		$message2 = "Mensaje de prueba";
 	
-		$logger->write($message2);
+		$logger->writeLog($message2);
 	
-		$this->assertStringEqualsFile($this->logFile, $message . $message2);
+		$this->assertStringEqualsFile($this->logFile, $message . $message2 . "\n");
 	}
 
 	public function testReadLog() {
 		$logger = new TxtLogger($this->logFile);
-		$message = "Mensaje de prueba";
+		$message1 = "Este es un log de preba";
+		$message2 = "con dos registros";
 	
-		$logger->write($message);
+		$logger->writeLog($message1);
+		$logger->writeLog($message2);
 	
-		$this->assertSame($message, $logger->readLogWithTag());
+		$this->assertEquals($message1 . "\n" . $message2 . "\n", $logger->readLog());
 	}
 
 	public function testReadReuseLog() {
@@ -70,12 +72,12 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$logger = new TxtLogger($this->logFile);
 		$message2 = "Mensaje de prueba";
 	
-		$logger->write($message2);
+		$logger->writeLog($message2);
 	
-		$this->assertSame($message . $message2, $logger->readLogWithTag());
+		$this->assertSame($message . $message2 . "\n", $logger->readLogWithTag());
 	}
 
-	public function testWriteLineWithTag() {
+	public function testWriteLogWithTag() {
 		$logger = new TxtLogger($this->logFile);
 		$message = "Mensaje de prueba";
 		$tag = "TAG";
@@ -85,7 +87,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame($tag . ": " . $message . "\n", $logger->readLogWithTag());
 	}
 
-	public function testReadWithTag() {
+	public function testReadLogWithTag() {
 		$message = "Este es un log de prueba\n";
 		$this->createDummyLogFile($message);
 		$logger = new TxtLogger($this->logFile);
@@ -95,25 +97,5 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$logger->writeLogWithTag($tag, $message2);
 	
 		$this->assertSame($tag . ": " . $message2 . "\n", $logger->readLogWithTag($tag));
-	}
-
-	public function testWriteLogEntry() {
-		$logger = new TxtLogger($this->logFile);
-		$message = "Este es un log de preba";
-	
-		$logger->writeLog($message);
-	
-		$this->assertSame($message . "\n", $logger->readLogWithTag());
-	}
-
-	public function testReadLogEntries() {
-		$logger = new TxtLogger($this->logFile);
-		$message1 = "Este es un log de preba";
-		$message2 = "con dos registros";
-	
-		$logger->writeLog($message1);
-		$logger->writeLog($message2);
-	
-		$this->assertEquals($message1 . "\n" . $message2 . "\n", $logger->readLog());
 	}
 }
