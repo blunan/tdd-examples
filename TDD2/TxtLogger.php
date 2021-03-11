@@ -10,7 +10,7 @@ class TxtLogger {
 		$this->log = fopen($file, "w");
 	}
 
-	public function write($message) {
-		fwrite($this->log, $message);
+	public function writeLine($message) {
+		fwrite($this->log, $message . "\n");
 	}
 }
