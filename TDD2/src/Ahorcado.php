@@ -84,6 +84,7 @@ class Ahorcado {
 				$lettersToGuess--;
 			}
 		}
+		$this->log("El jugador ha ganado");
 		return $lettersToGuess == 0;
 	}
 
