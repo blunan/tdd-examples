@@ -239,6 +239,20 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 
 		$game->hasWon();
 	}
+
+	public function testNoLogNotHasWon() {
+		$mockLogger = $this->createMock(Log::class);
+		$game = new Ahorcado("Cerveza", 5, $mockLogger);
+		$mockLogger->expects($this->exactly(5))
+			->method('writeLogWithTag');
+
+		$game->tryLetter('c');
+		$game->tryLetter('r');
+		$game->tryLetter('v');
+		$game->tryLetter('z');
+		$game->tryLetter('a');
+		$game->hasWon();
+	}
 }
 
 ?>
