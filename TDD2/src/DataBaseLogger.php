@@ -18,8 +18,14 @@ class DataBaseLogger implements Log {
 	}
 
 	public function readLog(): String {
-		$this->database->query('SELECT tag, log_message FROM logs');
-		return "";
+		$response = "";
+		$results = $this->database
+			->query('SELECT tag, log_message FROM logs;')
+			->fetchAll();
+		foreach ($results as $row) {
+			$response .= $row['log_message'] . "\n";
+		}
+		return $response;
 	}
 
 	public function writeLogWithTag($tag , $message): void {

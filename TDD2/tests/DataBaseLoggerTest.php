@@ -30,10 +30,25 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 		$mockDataBase = $this->createMock(\PDO::class);
 		$logger = new DataBaseLogger($mockDataBase);
 
+		$mockPDOStatement = $this->createMock(\PDOStatement::class);
+
 		$mockDataBase->expects($this->once())
 			->method('query')
-			->with('SELECT tag, log_message FROM logs');
+			->with('SELECT tag, log_message FROM logs;')
+			->will($this->returnValue($mockPDOStatement));
+		
+		$mockPDOStatement->expects($this->once())
+			->method('fetchAll')
+			->will($this->returnValue([]));
 		
 		$this->assertEmpty($logger->readLog());
+	}
+
+	public function testReadLogResults() {
+		$logger = new DataBaseLogger(new \PDO('sqlite::memory:'));
+		
+		$logger->writeLog("Este es un mensaje de prueba");
+
+		$this->assertSame("Este es un mensaje de prueba\n", $logger->readLog());
 	}
 }
