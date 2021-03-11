@@ -62,4 +62,18 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 		
 		$logger->writeLogWithTag("TAG", "Este es un mensaje de prueba");
 	}
+
+	public function testReadLogWithTagQuery() {
+		$mockDataBase = $this->createMock(\PDO::class);
+		$logger = new DataBaseLogger($mockDataBase);
+
+		$mockPDOStatement = $this->createMock(\PDOStatement::class);
+
+		$mockDataBase->expects($this->once())
+			->method('query')
+			->with('SELECT tag, log_message FROM logs WHERE tag = ALGO;')
+			->will($this->returnValue($mockPDOStatement));
+		
+		$this->assertEmpty($logger->readLogWithTag("ALGO"));
+	}
 }

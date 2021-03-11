@@ -32,7 +32,9 @@ class DataBaseLogger implements Log {
 		$this->database->exec('INSERT INTO logs (tag, log_message) VALUES ("' . $tag . '", "' . $message . '");');
 	}
 
-	public function readLogWithTag($tag = ""): String {
+	public function readLogWithTag($tag): String {
+		$results = $this->database
+			->query('SELECT tag, log_message FROM logs WHERE tag = ' . $tag . ';');
 		return "";
 	}
 }
