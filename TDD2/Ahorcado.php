@@ -23,7 +23,7 @@ class Ahorcado {
 		}
 	}
 
-	private function getTriesLeft() {
+	public function getTriesLeft() {
 		$triesLeft = $this->maxTries;
 		foreach ($this->triedLetters as $letter) {
 			if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
@@ -42,7 +42,6 @@ class Ahorcado {
 			}
 		}, $this->word);
 		$output = implode(" ", $output);
-		$output .= "\nIntentos restantes: " . $this->getTriesLeft() . "\n\n";
 		return $output;
 	}
 

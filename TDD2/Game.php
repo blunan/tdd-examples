@@ -7,8 +7,8 @@
 
 	while(!$game->hasWon() && !$game->hasLost()) {
 		echo "\n\nYour game ID is: " . $game->getGameId() . "\n\n";
-		echo "Adivina la palabra\n\n";
-		echo $game->show();
+		echo "Adivina la palabra\tIntentos restantes: " . $game->getTriesLeft() . "\n\n";
+		echo $game->show() . "\n\n";
 		echo "Introduce una letra: ";
 		$letter = trim(fgets(STDIN));
 		$result = $game->tryLetter($letter);
