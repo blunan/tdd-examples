@@ -4,13 +4,19 @@ namespace TDD2;
 
 class TxtLogger {
 
-	private $log;
+	private $file;
 
 	public function __construct($file) {
-		$this->log = fopen($file, "w");
+		$this->file = $file;
+		fclose(fopen($file, "w"));
 	}
 
-	public function writeLine($message) {
-		fwrite($this->log, $message . "\n");
+	public function writeLine($message, $tag = '') {
+		$log = fopen($this->file, "a");
+		if(!empty($tag)) {
+			$tag .= ": ";
+		}
+		fwrite($log, $tag . $message . "\n");
+		fclose($log);
 	}
 }
