@@ -54,6 +54,7 @@ class Ahorcado {
 			}
 		}, $this->word);
 		$output = implode(" ", $output);
+		$this->log($output);
 		return $output;
 	}
 
