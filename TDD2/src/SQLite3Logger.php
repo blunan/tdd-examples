@@ -4,7 +4,12 @@ namespace TDD2;
 
 require 'LogInterface.php';
 
-class DataBaseLogger implements Log {
+class SQLite3Logger implements Log {
+
+	public function __construct(String $logDataBase) {
+		$bd = new \SQLite3($logDataBase);
+		$bd->close();
+	}
 	
 	public function writeLog($message): void {
 	}
