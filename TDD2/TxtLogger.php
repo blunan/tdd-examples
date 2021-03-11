@@ -17,11 +17,18 @@ class TxtLogger {
 		fclose($log);
 	}
 
-	public function read() {
+	public function read($tag = "") {
 		$log = fopen($this->file, "r");
 		$result = "";
 		while(!feof($log)) {
-			$result .= fgets($log);
+			$line = fgets($log);
+			if(!empty($tag)) {
+				if(strpos($line, $tag) === 0) {
+					$result .= $line;
+				}
+			} else {
+				$result .= $line;
+			}
 		  }
 		fclose($log);
 		return $result;

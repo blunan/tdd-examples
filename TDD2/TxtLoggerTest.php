@@ -84,4 +84,16 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$this->assertSame($tag . ": " . $message . "\n", $logger->read());
 	}
+
+	public function testReadWithTag() {
+		$message = "Este es un log de prueba\n";
+		$this->createDummyLogFile($message);
+		$logger = new TxtLogger($this->logFile);
+		$message2 = "Mensaje de prueba";
+		$tag = "TAG";
+	
+		$logger->writeLine($tag, $message2);
+	
+		$this->assertSame($tag . ": " . $message2 . "\n", $logger->read($tag));
+	}
 }
