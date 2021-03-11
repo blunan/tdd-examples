@@ -42,7 +42,7 @@ class TxtLogger implements Log {
 	}
 
 	public function writeLog($message) {
-
+		$this->write($message . "\n");
 	}
 
 	public function readLog() {
