@@ -7,6 +7,7 @@ require __DIR__.'/../src/TxtLogger.php';
 class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 
 	private $logFile = "test.log";
+	private $otherFile = "other.log";
 
 	protected function setUp(): void {
 		if (file_exists($this->logFile)) {
@@ -14,88 +15,67 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	protected function createDummyLogFile($message) {
-		$log = fopen($this->logFile, "w");
+	private function createDummyLogFile($message) {
+		$log = fopen($this->otherFile, "w");
 		fwrite($log, $message);
 		fclose($log);
 	}
 
-	public function testInitializeLogFile() {
-		$logger = new TxtLogger($this->logFile);
-
-		$this->assertFileExists($this->logFile);
-	}
-
-	public function testInitializeReuseLogFile() {
-		$message = "Este es un log de prueba";
-		$this->createDummyLogFile($message);
-
-		$logger = new TxtLogger($this->logFile);
-
-		$this->assertStringEqualsFile($this->logFile, $message);
+	private function deleteDummyLogFile() {
+		unlink($this->otherFile);
 	}
 
 	public function testWriteLog() {
 		$logger = new TxtLogger($this->logFile);
-		$message = "Este es un log de preba";
 	
-		$logger->writeLog($message);
+		$logger->writeLog("Este es un log de preba");
 	
-		$this->assertSame($message . "\n", $logger->readLogWithTag());
+		$this->assertStringEqualsFile($this->logFile, "Este es un log de preba\n");
 	}
 
 	public function testWriteReuseLog() {
-		$message = "Este es un log de prueba\n";
-		$this->createDummyLogFile($message);
-		$logger = new TxtLogger($this->logFile);
-		$message2 = "Mensaje de prueba";
+		$this->createDummyLogFile("Este es un log de prueba\n");
+		$logger = new TxtLogger($this->otherFile);
 	
-		$logger->writeLog($message2);
+		$logger->writeLog("que ya tenía contenido");
 	
-		$this->assertStringEqualsFile($this->logFile, $message . $message2 . "\n");
+		$this->assertStringEqualsFile($this->otherFile, "Este es un log de prueba\nque ya tenía contenido\n");
+
+		$this->deleteDummyLogFile();
 	}
 
 	public function testReadLog() {
 		$logger = new TxtLogger($this->logFile);
-		$message1 = "Este es un log de preba";
-		$message2 = "con dos registros";
 	
-		$logger->writeLog($message1);
-		$logger->writeLog($message2);
+		$logger->writeLog("Este es un log de preba");
 	
-		$this->assertEquals($message1 . "\n" . $message2 . "\n", $logger->readLog());
+		$this->assertEquals("Este es un log de preba\n", $logger->readLog());
 	}
 
 	public function testReadReuseLog() {
-		$message = "Este es un log de prueba\n";
-		$this->createDummyLogFile($message);
-		$logger = new TxtLogger($this->logFile);
-		$message2 = "Mensaje de prueba";
+		$this->createDummyLogFile("Este es un log de prueba\n");
+		$logger = new TxtLogger($this->otherFile);
 	
-		$logger->writeLog($message2);
+		$logger->writeLog("que ya tenía contenido");
 	
-		$this->assertSame($message . $message2 . "\n", $logger->readLogWithTag());
+		$this->assertSame("Este es un log de prueba\nque ya tenía contenido\n", $logger->readLog());
+
+		$this->deleteDummyLogFile();
 	}
 
 	public function testWriteLogWithTag() {
 		$logger = new TxtLogger($this->logFile);
-		$message = "Mensaje de prueba";
-		$tag = "TAG";
 	
-		$logger->writeLogWithTag($tag, $message);
+		$logger->writeLogWithTag("TAG", "Mensaje de prueba");
 	
-		$this->assertSame($tag . ": " . $message . "\n", $logger->readLogWithTag());
+		$this->assertSame("TAG: Mensaje de prueba\n", $logger->readLog());
 	}
 
 	public function testReadLogWithTag() {
-		$message = "Este es un log de prueba\n";
-		$this->createDummyLogFile($message);
 		$logger = new TxtLogger($this->logFile);
-		$message2 = "Mensaje de prueba";
-		$tag = "TAG";
 	
-		$logger->writeLogWithTag($tag, $message2);
+		$logger->writeLogWithTag("TAG", "Este es un log de prueba");
 	
-		$this->assertSame($tag . ": " . $message2 . "\n", $logger->readLogWithTag($tag));
+		$this->assertSame("TAG: Este es un log de prueba\n", $logger->readLogWithTag("TAG"));
 	}
 }

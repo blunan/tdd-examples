@@ -10,13 +10,24 @@ class TxtLogger implements Log {
 
 	public function __construct($file) {
 		$this->file = $file;
-		fclose(fopen($file, "a"));
 	}
 
 	private function write($message) {
 		$log = fopen($this->file, "a");
 		fwrite($log, $message);
 		fclose($log);
+	}
+
+	public function writeLog($message): void {
+		$this->write($message . "\n");
+	}
+
+	public function readLog(): String {
+		return $this->readLogWithTag();
+	}
+
+	public function writeLogWithTag($tag , $message): void {
+		$this->write($tag . ": " . $message . "\n");
 	}
 
 	public function readLogWithTag($tag = ""): String {
@@ -34,17 +45,5 @@ class TxtLogger implements Log {
 		  }
 		fclose($log);
 		return $result;
-	}
-
-	public function writeLogWithTag($tag , $message): void {
-		$this->write($tag . ": " . $message . "\n");
-	}
-
-	public function writeLog($message): void {
-		$this->write($message . "\n");
-	}
-
-	public function readLog(): String {
-		return $this->readLogWithTag();
 	}
 }
