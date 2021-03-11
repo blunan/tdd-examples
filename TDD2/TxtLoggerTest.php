@@ -80,7 +80,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$message = "Mensaje de prueba";
 		$tag = "TAG";
 	
-		$logger->writeLine($tag, $message);
+		$logger->writeLogWithTag($tag, $message);
 	
 		$this->assertSame($tag . ": " . $message . "\n", $logger->read());
 	}
@@ -92,7 +92,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$message2 = "Mensaje de prueba";
 		$tag = "TAG";
 	
-		$logger->writeLine($tag, $message2);
+		$logger->writeLogWithTag($tag, $message2);
 	
 		$this->assertSame($tag . ": " . $message2 . "\n", $logger->read($tag));
 	}
