@@ -20,7 +20,7 @@ class TxtLogger implements Log {
 		fclose($log);
 	}
 
-	public function read($tag = "") {
+	public function readLogWithTag($tag = "") {
 		$log = fopen($this->file, "r");
 		$result = "";
 		while(!feof($log)) {
@@ -46,10 +46,6 @@ class TxtLogger implements Log {
 	}
 
 	public function readLog() {
-		return $this->read();
-	}
-
-	public function readLogWithTag($tag) {
-
+		return $this->readLogWithTag();
 	}
 }

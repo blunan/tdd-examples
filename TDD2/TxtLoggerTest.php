@@ -61,7 +61,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$logger->write($message);
 	
-		$this->assertSame($message, $logger->read());
+		$this->assertSame($message, $logger->readLogWithTag());
 	}
 
 	public function testReadReuseLog() {
@@ -72,7 +72,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$logger->write($message2);
 	
-		$this->assertSame($message . $message2, $logger->read());
+		$this->assertSame($message . $message2, $logger->readLogWithTag());
 	}
 
 	public function testWriteLineWithTag() {
@@ -82,7 +82,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$logger->writeLogWithTag($tag, $message);
 	
-		$this->assertSame($tag . ": " . $message . "\n", $logger->read());
+		$this->assertSame($tag . ": " . $message . "\n", $logger->readLogWithTag());
 	}
 
 	public function testReadWithTag() {
@@ -94,7 +94,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$logger->writeLogWithTag($tag, $message2);
 	
-		$this->assertSame($tag . ": " . $message2 . "\n", $logger->read($tag));
+		$this->assertSame($tag . ": " . $message2 . "\n", $logger->readLogWithTag($tag));
 	}
 
 	public function testWriteLogEntry() {
@@ -103,7 +103,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$logger->writeLog($message);
 	
-		$this->assertSame($message . "\n", $logger->read());
+		$this->assertSame($message . "\n", $logger->readLogWithTag());
 	}
 
 	public function testReadLogEntries() {
