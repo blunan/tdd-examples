@@ -16,4 +16,11 @@ class TxtLogger {
 		fwrite($log, $message);
 		fclose($log);
 	}
+
+	public function read() {
+		$log = fopen($this->file, "r");
+		$line = fgets($log);
+		fclose($log);
+		return $line;
+	}
 }

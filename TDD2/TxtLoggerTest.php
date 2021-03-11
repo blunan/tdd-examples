@@ -20,7 +20,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		fclose($log);
 	}
 
-	public function testInitializeNewLogFile() {
+	public function testInitializeLogFile() {
 		$logger = new TxtLogger($this->logFile);
 
 		$this->assertFileExists($this->logFile);
@@ -35,7 +35,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertStringEqualsFile($this->logFile, $message);
 	}
 
-	public function testWriteNewLog() {
+	public function testWriteLog() {
 		$logger = new TxtLogger($this->logFile);
 		$message = "Mensaje de prueba";
 	
@@ -53,5 +53,14 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		$logger->write($message2);
 	
 		$this->assertStringEqualsFile($this->logFile, $message . $message2);
+	}
+
+	public function testReadLog() {
+		$logger = new TxtLogger($this->logFile);
+		$message = "Mensaje de prueba";
+	
+		$logger->write($message);
+	
+		$this->assertSame($message, $logger->read());
 	}
 }
