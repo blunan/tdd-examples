@@ -187,6 +187,16 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 		
 		$game->show();
 	}
+
+	public function testLogTryLetter() {
+		$mockLogger = $this->createMock(Log::class);
+		$game = new Ahorcado("Cerveza", 5, $mockLogger);
+		$mockLogger->expects($this->once())
+			->method('writeLogWithTag')
+			->with($this->equalTo($game->getGameId()), $this->equalTo("El jugador intenta la letra: Z"));
+		
+		$game->tryLetter('Z');
+	}
 }
 
 ?>

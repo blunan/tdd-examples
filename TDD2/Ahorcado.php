@@ -64,6 +64,7 @@ class Ahorcado {
 	 *  1 LEtra valida
 	*/
 	public function tryLetter($letter) {
+		$this->log("El jugador intenta la letra: " . $letter);
 		if($this->isLetterIgnoreCaseInArray($letter, $this->triedLetters)) {
 			return 0;
 		}
