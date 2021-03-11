@@ -71,9 +71,21 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 
 		$mockDataBase->expects($this->once())
 			->method('query')
-			->with('SELECT tag, log_message FROM logs WHERE tag = ALGO;')
+			->with('SELECT tag, log_message FROM logs WHERE tag = "ALGO";')
 			->will($this->returnValue($mockPDOStatement));
 		
+		$mockPDOStatement->expects($this->once())
+			->method('fetchAll')
+			->will($this->returnValue([]));
+		
 		$this->assertEmpty($logger->readLogWithTag("ALGO"));
+	}
+
+	public function testReadLogWithTagResults() {
+		$logger = new DataBaseLogger(new \PDO('sqlite::memory:'));
+		
+		$logger->writeLogWithTag("GAME_ID", "Este es un mensaje de prueba");
+
+		$this->assertSame("GAME_ID: Este es un mensaje de prueba\n", $logger->readLogWithTag("GAME_ID"));
 	}
 }

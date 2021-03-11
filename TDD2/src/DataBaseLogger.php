@@ -33,8 +33,13 @@ class DataBaseLogger implements Log {
 	}
 
 	public function readLogWithTag($tag): String {
+		$response = "";
 		$results = $this->database
-			->query('SELECT tag, log_message FROM logs WHERE tag = ' . $tag . ';');
-		return "";
+			->query('SELECT tag, log_message FROM logs WHERE tag = "' . $tag . '";')
+			->fetchAll();
+		foreach ($results as $row) {
+			$response .= $row['tag'] . ": " . $row['log_message'] . "\n";
+		}
+		return $response;
 	}
 }
