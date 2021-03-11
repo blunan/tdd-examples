@@ -18,6 +18,7 @@ class DataBaseLogger implements Log {
 	}
 
 	public function readLog(): String {
+		$this->database->query('SELECT tag, log_message FROM logs');
 		return "";
 	}
 

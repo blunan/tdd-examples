@@ -25,4 +25,15 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 		
 		$logger->writeLog("Este es un mensaje de prueba");
 	}
+
+	public function testReadLogQuery() {
+		$mockDataBase = $this->createMock(\PDO::class);
+		$logger = new DataBaseLogger($mockDataBase);
+
+		$mockDataBase->expects($this->once())
+			->method('query')
+			->with('SELECT tag, log_message FROM logs');
+		
+		$this->assertEmpty($logger->readLog());
+	}
 }
