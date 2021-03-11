@@ -46,7 +46,7 @@ class TxtLogger implements Log {
 	}
 
 	public function readLog() {
-
+		return $this->read();
 	}
 
 	public function writeLogWithTag($tag , $message) {

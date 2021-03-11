@@ -105,4 +105,15 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$this->assertSame($message . "\n", $logger->read());
 	}
+
+	public function testReadLogEntries() {
+		$logger = new TxtLogger($this->logFile);
+		$message1 = "Este es un log de preba";
+		$message2 = "con dos registros";
+	
+		$logger->writeLog($message1);
+		$logger->writeLog($message2);
+	
+		$this->assertEquals($message1 . "\n" . $message2 . "\n", $logger->readLog());
+	}
 }
