@@ -3,6 +3,7 @@
 namespace TDD2;
 
 require 'Ahorcado.php';
+require 'LogInterface.php';
 
 class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 
@@ -162,6 +163,19 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 		$game2 = new Ahorcado("Carreola", 5);
 
 		$this->assertNotEquals($game1->getGameId(), $game2->getGameId());
+	}
+
+	public function testInitializeWithLogger() {
+		$mockLogger = $this->createMock(Log::class);
+		$mockLogger->expects($this->exactly(3))
+			->method('writeLogWithTag')
+			->withConsecutive(
+				[$this->anything(), $this->equalTo("Comenzando un nuevo juego")],
+				[$this->anything(), $this->equalTo("Palabra secreta: Cerveza")],
+				[$this->anything(), $this->equalTo("Intentos disponibles: 5")]
+			);
+
+		$game = new Ahorcado("Cerveza", 5, $mockLogger);
 	}
 }
 

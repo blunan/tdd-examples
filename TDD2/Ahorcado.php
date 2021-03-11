@@ -5,14 +5,26 @@ namespace TDD2;
 class Ahorcado {
 
 	private $word;
+	private $logger;
 	private $gameId;
 	private $maxTries;
 	private $triedLetters = [];
 
-	public function __construct($word, $maxTries) {
+	public function __construct($word, $maxTries, Log $logger = null) {
+		$this->logger = $logger;
 		$this->gameId = uniqid();
 		$this->maxTries = $maxTries;
 		$this->word = str_split($word);
+		
+		$this->log("Comenzando un nuevo juego");
+		$this->log("Palabra secreta: " . $word);
+		$this->log("Intentos disponibles: " . $maxTries);
+	}
+
+	private function log($message) {
+		if($this->logger != null) {
+			$this->logger->writeLogWithTag($this->gameId, $message);
+		}
 	}
 
 	private function isLetterIgnoreCaseInArray($letter, $array) {
