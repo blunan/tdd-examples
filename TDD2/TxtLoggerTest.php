@@ -14,10 +14,18 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
-	public function testInitialize() {
+	public function testInitializeTestLog() {
 		$logger = new TxtLogger($this->logFile);
 
 		$this->assertFileExists($this->logFile);
 	}
 
+	public function testWriteMessageToLog() {
+		$logger = new TxtLogger($this->logFile);
+		$message = "Mensaje de prueba";
+
+		$logger->write($message);
+
+		$this->assertStringEqualsFile($this->logFile, $message);
+	}
 }

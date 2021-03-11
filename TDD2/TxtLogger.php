@@ -4,7 +4,13 @@ namespace TDD2;
 
 class TxtLogger {
 
+	private $log;
+
 	public function __construct($file) {
-		fopen($file, "w");
+		$this->log = fopen($file, "w");
+	}
+
+	public function write($message) {
+		fwrite($this->log, $message);
 	}
 }
