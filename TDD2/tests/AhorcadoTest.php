@@ -269,6 +269,19 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 
 		$game->hasLost();
 	}
+
+	public function testNoLogNotHasLost() {
+		$mockLogger = $this->createMock(Log::class);
+		$game = new Ahorcado("Perro", 5, $mockLogger);
+		$mockLogger->expects($this->exactly(4))
+			->method('writeLogWithTag');
+
+		$game->tryLetter('M');
+		$game->tryLetter('n');
+		$game->tryLetter('z');
+		$game->tryLetter('x');
+		$game->hasLost();
+	}
 }
 
 ?>

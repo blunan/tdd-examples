@@ -91,8 +91,12 @@ class Ahorcado {
 	}
 
 	public function hasLost() {
-		$this->log("El jugador ha perdido");
-		return !($this->getTriesLeft() > 0);
+		if($this->getTriesLeft() > 0) {
+			return false;
+		} else {
+			$this->log("El jugador ha perdido");
+			return true;
+		}
 	}
 
 	public function getGameId() {
