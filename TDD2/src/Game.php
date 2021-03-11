@@ -1,9 +1,14 @@
 <?php
 	namespace TDD2;
 
-	require 'Ahorcado.php';
+	$logger = null;
+	require 'TxtLogger.php';
+	$logger = new TxtLogger("ahorcado.log");
+	//require 'DummyLogger.php';
+	//$logger = new DummyLogger("ahorcado.log");
 
-	$game = new Ahorcado("Parangaricutirimicuaro", 8);
+	require 'Ahorcado.php';
+	$game = new Ahorcado("Parangaricutirimicuaro", 8, $logger);
 
 	while(!$game->hasWon() && !$game->hasLost()) {
 		echo "\n\nYour game ID is: " . $game->getGameId() . "\n\n";
@@ -21,8 +26,15 @@
 	echo "\n\nYour game ID is: " . $game->getGameId();
 	echo "\n\n" . $game->show();
 	if($game->hasWon()) {
-		echo "Felicidades, haz ganado!!!\n\n";
+		echo "\n\nFelicidades, haz ganado!!!\n\n";
 	} else {
-		echo "Lo siento, haz perdido.\n\n";
+		echo "\n\nLo siento, haz perdido.\n\n";
+	}
+	if($logger != null) {
+		echo "Quieres revisar tus jugadas? (y/n) : ";
+		$letter = trim(fgets(STDIN));
+		if($letter == 'y' || $letter == 'Y') {
+			echo $logger->readLogWithTag($game->getGameId());
+		}
 	}
 ?>
