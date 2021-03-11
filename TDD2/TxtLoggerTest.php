@@ -29,9 +29,18 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	public function testInitializeReuseLogFile() {
 		$message = "Este es un log de prueba";
 		$this->createDummyLogFile($message);
-		
+
 		$logger = new TxtLogger($this->logFile);
 
+		$this->assertStringEqualsFile($this->logFile, $message);
+	}
+
+	public function testWriteNewLog() {
+		$logger = new TxtLogger($this->logFile);
+		$message = "Mensaje de prueba";
+	
+		$logger->write($message);
+	
 		$this->assertStringEqualsFile($this->logFile, $message);
 	}
 }
