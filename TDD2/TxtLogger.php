@@ -19,8 +19,11 @@ class TxtLogger {
 
 	public function read() {
 		$log = fopen($this->file, "r");
-		$line = fgets($log);
+		$result = "";
+		while(!feof($log)) {
+			$result .= fgets($log);
+		  }
 		fclose($log);
-		return $line;
+		return $result;
 	}
 }

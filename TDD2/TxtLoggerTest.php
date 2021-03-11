@@ -63,4 +63,15 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	
 		$this->assertSame($message, $logger->read());
 	}
+
+	public function testReadReuseLog() {
+		$message = "Este es un log de prueba\n";
+		$this->createDummyLogFile($message);
+		$logger = new TxtLogger($this->logFile);
+		$message2 = "Mensaje de prueba";
+	
+		$logger->write($message2);
+	
+		$this->assertSame($message . $message2, $logger->read());
+	}
 }
