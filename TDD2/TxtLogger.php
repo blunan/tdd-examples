@@ -2,7 +2,10 @@
 
 namespace TDD2;
 
-class TxtLogger {
+require 'LogInterface.php';
+
+
+class TxtLogger implements Log {
 
 	private $file;
 
@@ -36,5 +39,21 @@ class TxtLogger {
 
 	public function writeLine($tag , $message) {
 		$this->write($tag . ": " . $message . "\n");
+	}
+
+	public function writeLog($message) {
+
+	}
+
+	public function readLog() {
+
+	}
+
+	public function writeLogWithTag($tag , $message) {
+
+	}
+
+	public function readLogWithTag($tag) {
+
 	}
 }

@@ -8,7 +8,7 @@ interface Log {
 	public function writeLog($message);
 
 	// Reads the whole log
-	public function readLog($message);
+	public function readLog();
 
 	// Writes a message with a prefix tag
 	public function writeLogWithTag($tag , $message);
