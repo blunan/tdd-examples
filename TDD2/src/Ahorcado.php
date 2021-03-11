@@ -70,6 +70,7 @@ class Ahorcado {
 		}
 		$this->triedLetters[] = $letter;
 		if(!$this->isLetterIgnoreCaseInArray($letter, $this->word)) {
+			$this->log("La letra '" . $letter . "' no se encuentra en la palabra secreta");
 			return -1;
 		}
 		$this->log("El jugador intenta la letra: " . $letter);
