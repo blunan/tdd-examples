@@ -253,6 +253,22 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 		$game->tryLetter('a');
 		$game->hasWon();
 	}
+
+	public function testLogHasLost() {
+		$mockLogger = $this->createMock(Log::class);
+		$game = new Ahorcado("Perro", 5, $mockLogger);
+		$game->tryLetter('M');
+		$game->tryLetter('a');
+		$game->tryLetter('n');
+		$game->tryLetter('z');
+		$game->tryLetter('x');
+		
+		$mockLogger->expects($this->once())
+			->method('writeLogWithTag')
+			->with($this->equalTo($game->getGameId()), $this->equalTo("El jugador ha perdido"));
+
+		$game->hasLost();
+	}
 }
 
 ?>

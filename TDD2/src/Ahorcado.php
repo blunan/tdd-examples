@@ -91,6 +91,7 @@ class Ahorcado {
 	}
 
 	public function hasLost() {
+		$this->log("El jugador ha perdido");
 		return !($this->getTriesLeft() > 0);
 	}
 
