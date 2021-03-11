@@ -2,7 +2,7 @@
 
 namespace TDD2;
 
-require 'TxtLogger.php';
+require __DIR__.'/../src/TxtLogger.php';
 
 class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 

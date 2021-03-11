@@ -2,7 +2,7 @@
 
 namespace TDD2;
 
-require 'DummyLogger.php';
+require __DIR__.'/../src/DummyLogger.php';
 
 class DummyLoggerTest extends \PHPUnit\Framework\TestCase {
 

@@ -2,8 +2,8 @@
 
 namespace TDD2;
 
-require 'Ahorcado.php';
-require 'LogInterface.php';
+require __DIR__.'/../src/Ahorcado.php';
+require __DIR__.'/../src/LogInterface.php';
 
 class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 

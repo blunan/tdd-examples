@@ -4,7 +4,6 @@ namespace TDD2;
 
 require 'LogInterface.php';
 
-
 class DummyLogger implements Log {
 	
 	public function writeLog($message): void {

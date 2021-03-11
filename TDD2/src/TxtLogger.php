@@ -4,7 +4,6 @@ namespace TDD2;
 
 require 'LogInterface.php';
 
-
 class TxtLogger implements Log {
 
 	private $file;
