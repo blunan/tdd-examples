@@ -15,6 +15,12 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 		}
 	}
 
+	protected function tearDown(): void {
+		if (file_exists($this->logFile)) {
+			unlink($this->logFile);
+		}
+	}
+
 	private function createDummyLogFile($message) {
 		$log = fopen($this->otherFile, "w");
 		fwrite($log, $message);
