@@ -73,7 +73,7 @@ class Ahorcado {
 			$this->log("La letra '" . $letter . "' no se encuentra en la palabra secreta");
 			return -1;
 		}
-		$this->log("El jugador intenta la letra: " . $letter);
+		$this->log("El jugador acierta la letra: " . $letter);
 		return 1;
 	}
 

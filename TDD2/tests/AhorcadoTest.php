@@ -193,7 +193,7 @@ class AhorcadoTest extends \PHPUnit\Framework\TestCase {
 		$game = new Ahorcado("Cerveza", 5, $mockLogger);
 		$mockLogger->expects($this->once())
 			->method('writeLogWithTag')
-			->with($this->equalTo($game->getGameId()), $this->equalTo("El jugador intenta la letra: Z"));
+			->with($this->equalTo($game->getGameId()), $this->equalTo("El jugador acierta la letra: Z"));
 		
 		$game->tryLetter('Z');
 	}
