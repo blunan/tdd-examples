@@ -6,18 +6,19 @@ require __DIR__.'/../src/TxtLogger.php';
 
 class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 
-	private $logFile = "test.log";
+	private static $logFile = "test.log";
+
 	private $otherFile = "other.log";
 
 	protected function setUp(): void {
-		if (file_exists($this->logFile)) {
-			unlink($this->logFile);
+		if (file_exists(TxtLoggerTest::$logFile)) {
+			unlink(TxtLoggerTest::$logFile);
 		}
 	}
 
-	protected function tearDown(): void {
-		if (file_exists($this->logFile)) {
-			unlink($this->logFile);
+	public static function tearDownAfterClass(): void {
+		if (file_exists(TxtLoggerTest::$logFile)) {
+			unlink(TxtLoggerTest::$logFile);
 		}
 	}
 
@@ -32,11 +33,11 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testWriteLog() {
-		$logger = new TxtLogger($this->logFile);
+		$logger = new TxtLogger(TxtLoggerTest::$logFile);
 	
 		$logger->writeLog("Este es un log de preba");
 	
-		$this->assertStringEqualsFile($this->logFile, "Este es un log de preba\n");
+		$this->assertStringEqualsFile(TxtLoggerTest::$logFile, "Este es un log de preba\n");
 	}
 
 	public function testWriteReuseLog() {
@@ -51,7 +52,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testReadLog() {
-		$logger = new TxtLogger($this->logFile);
+		$logger = new TxtLogger(TxtLoggerTest::$logFile);
 	
 		$logger->writeLog("Este es un log de preba");
 	
@@ -70,7 +71,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testWriteLogWithTag() {
-		$logger = new TxtLogger($this->logFile);
+		$logger = new TxtLogger(TxtLoggerTest::$logFile);
 	
 		$logger->writeLogWithTag("TAG", "Mensaje de prueba");
 	
@@ -78,7 +79,7 @@ class TxtLoggerTest extends \PHPUnit\Framework\TestCase {
 	}
 
 	public function testReadLogWithTag() {
-		$logger = new TxtLogger($this->logFile);
+		$logger = new TxtLogger(TxtLoggerTest::$logFile);
 	
 		$logger->writeLogWithTag("TAG", "Este es un log de prueba");
 	
