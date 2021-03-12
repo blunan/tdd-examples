@@ -52,6 +52,22 @@ class DataBaseLoggerTest extends \PHPUnit\Framework\TestCase {
 		$this->assertSame("Este es un mensaje de prueba\n", $logger->readLog());
 	}
 
+	public function testReadLogReuseDataBase() {
+		if (file_exists('test.db')) {
+			unlink('test.db');
+		}
+		$loggerA = new DataBaseLogger(new \PDO('sqlite:test.db'));
+		$loggerA->writeLog("Este es un mensaje de prueba");
+
+
+		$loggerB = new DataBaseLogger(new \PDO('sqlite:test.db'));
+		$loggerB->writeLog("Este es otro log de prueba");
+
+		$this->assertSame("Este es un mensaje de prueba\nEste es otro log de prueba\n", $loggerB->readLog());
+
+		unlink('test.db');
+	}
+
 	public function testWriteLogWithTag() {
 		$mockDataBase = $this->createMock(\PDO::class);
 		$logger = new DataBaseLogger($mockDataBase);
