@@ -2,10 +2,10 @@
 	namespace TDD2;
 
 	$logger = null;
-	require 'TxtLogger.php';
-	$logger = new TxtLogger("ahorcado.log");
-	//require 'DummyLogger.php';
-	//$logger = new DummyLogger("ahorcado.log");
+	//require 'TxtLogger.php';
+	//$logger = new TxtLogger("ahorcado.log");
+	require 'DataBaseLogger.php';
+	$logger = new DataBaseLogger(new \PDO('sqlite:ahoracdo.db'));
 
 	require 'Ahorcado.php';
 	$game = new Ahorcado("Parangaricutirimicuaro", 8, $logger);
